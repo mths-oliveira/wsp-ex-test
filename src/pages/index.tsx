@@ -15,7 +15,9 @@ const initialTimezone = new TimezoneImp("America/Sao_Paulo")
 export default function () {
   const [timezone, setTimezone] = useState(initialTimezone)
   const [currencyData, setCurrencyData] = useState(initialCurrencyData)
-  const [view, setView] = useState<"timezones" | "currencies" | undefined>()
+  const [view, setView] = useState<"timezones" | "currencies" | undefined>(
+    undefined
+  )
   const isOpen = !!view
   function onClose() {
     setView(undefined)
