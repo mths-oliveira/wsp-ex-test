@@ -115,7 +115,7 @@ export default function () {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <SearchBox onButtonClick={onClose} onInput={setQuery} />
-        <List position="relative" overflowY="auto" height="100%" bg="primary">
+        <List position="relative" height="100%" overflowY="auto">
           {currencies.filter(filter).map((currency, i) => (
             <AnimatedListItem
               key={currency.code}

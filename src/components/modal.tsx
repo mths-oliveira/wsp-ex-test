@@ -3,29 +3,57 @@ import {
   Modal as ChakraModal,
   ModalContent,
   ModalProps,
+  Box,
+  Center,
+  Flex,
 } from "@chakra-ui/react"
+import { useEffect, useRef } from "react"
 
 export function Modal({ isOpen, onClose, children }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>()
+  const animationDuration = 150
+  useEffect(() => {
+    const boxRef = modalRef.current.childNodes[0] as HTMLDivElement
+    const input = document.getElementById("currency-input") as HTMLInputElement
+
+    if (isOpen) {
+      modalRef.current.style.display = "flex"
+      setTimeout(() => {
+        input.focus()
+        boxRef.style.opacity = "1"
+        boxRef.style.transform = "scale(1)"
+      }, animationDuration)
+    } else {
+      boxRef.style.opacity = "0"
+      boxRef.style.transform = "scale(0.9)"
+      setTimeout(() => {
+        modalRef.current.style.display = "none"
+      }, animationDuration)
+    }
+  }, [isOpen])
   return (
-    <ChakraModal
-      isOpen={isOpen}
-      onClose={onClose}
-      size="full"
-      scrollBehavior="inside"
+    <Center
+      bg="rgba(0,0,0,0.5)"
+      position="fixed"
+      inset="0"
+      onClick={onClose}
+      ref={modalRef}
+      display="none"
     >
-      <ModalOverlay />
-      <ModalContent
-        bg="transparent"
-        minHeight="0"
-        maxHeight="100vh"
-        maxW="25rem"
-        overflow="hidden"
-        borderRadius="6px"
-        margin={["0", "3.5rem"]}
+      <Flex
+        flexDirection="column"
+        transitionDuration={`${animationDuration}ms`}
+        bg="primary"
+        overflowY="auto"
         height={["100%", "calc(100% - 7rem)"]}
+        maxWidth="25rem"
+        borderRadius="5px"
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
       >
         {children}
-      </ModalContent>
-    </ChakraModal>
+      </Flex>
+    </Center>
   )
 }

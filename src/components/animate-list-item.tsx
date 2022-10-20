@@ -12,7 +12,7 @@ export function AnimatedListItem(props: Props) {
       top={`${top}px`}
       opacity={0}
       transition="top 0.3s"
-      animation="0.3s forwards fade-in"
+      animation="0.3s forwards slade-in"
       cursor="pointer"
       bg="primary"
       width="100%"

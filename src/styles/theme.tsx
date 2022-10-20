@@ -43,7 +43,7 @@ export const theme = extendTheme({
         fontWeight: 500,
         scrollBehavior: "smooth",
       },
-      "@keyframes fade-in": {
+      "@keyframes slade-in": {
         from: {
           opacity: 0,
           transform: "translateY(50%)",
@@ -51,6 +51,16 @@ export const theme = extendTheme({
         to: {
           opacity: 1,
           transform: "initial",
+        },
+      },
+      "@keyframes scale-in": {
+        from: {
+          opacity: 0,
+          transform: "scale(0.9)",
+        },
+        to: {
+          opacity: 1,
+          transform: "scale(1)",
         },
       },
     },
