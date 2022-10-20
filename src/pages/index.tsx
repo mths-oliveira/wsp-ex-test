@@ -1,78 +1,119 @@
-import { Modal, ModalOverlay, ModalContent, Box, Flex } from "@chakra-ui/react"
-
+import {
+  Box,
+  Flex,
+  List,
+  TableCaption,
+  Tbody,
+  Td,
+  Tfoot,
+  Th,
+  Thead,
+  Tr,
+  useDisclosure,
+} from "@chakra-ui/react"
 import { useState } from "react"
-import { TimezonesView } from "../views/timezone"
-import { ClassesView } from "../views/classes"
-import { TimezoneImp } from "../backend/models/timezone"
-import { ProductsView } from "../views/products"
-import { CurrencyController } from "../backend/controllers/currency"
-import { CurrencyView } from "../views/currency"
+import { ClassesController } from "../backend/controllers/classes"
+import { TimezoneController } from "../backend/controllers/timezones"
+import { Timezone, TimezoneImp } from "../backend/models/timezone"
+import { AnimatedListItem } from "../components/animate-list-item"
+import { Modal } from "../components/modal"
+import { Profile } from "../components/profile"
+import { SearchBox } from "../components/search-box"
+import { Table } from "../components/table"
+import { ToggleThemeButton } from "../components/toggle-theme-button"
+import { removeAccent } from "../utils/remove-accent"
 
-const currencyController = new CurrencyController()
-const initialCurrencyData = currencyController.fetchCurrencyDataByCode("BRL")
+const classesController = new ClassesController()
+const timezoneController = new TimezoneController()
+const timezones = timezoneController.listAllTimezones()
 const initialTimezone = new TimezoneImp("America/Sao_Paulo")
 
 export default function () {
   const [timezone, setTimezone] = useState(initialTimezone)
-  const [currencyData, setCurrencyData] = useState(initialCurrencyData)
-  const [view, setView] = useState<"timezones" | "currencies" | undefined>()
-  const isOpen = !!view
-  function onClose() {
-    setView(undefined)
-  }
-  function openTimezoneModal() {
-    setView("timezones")
-  }
-  function openCurrencyModal() {
-    setView("currencies")
+  const { isOpen, onClose, onOpen } = useDisclosure()
+  const classes = classesController.findAllClassesInTimeZone(timezone.offset)
+  const [query, setQuery] = useState("")
+  const regexp = RegExp(removeAccent(query), "i")
+  function filter(timezone: Timezone) {
+    if (query.match(/^GMT?$/i)) return true
+    if (query.match(/[\d+:-]/)) {
+      return Boolean(timezone.offsetName.includes(query.toUpperCase()))
+    }
+    return Boolean(
+      regexp.exec(removeAccent(timezone.city)) ||
+        regexp.exec(removeAccent(timezone.country))
+    )
   }
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        size="full"
-        scrollBehavior="inside"
-      >
-        <ModalOverlay />
-        <ModalContent
-          bg="transparent"
-          minHeight="0"
-          maxHeight="100vh"
-          maxW="25rem"
-          overflow="hidden"
-          borderRadius="6px"
-          margin={["0", "3.5rem"]}
-          height={["100%", "calc(100% - 7rem)"]}
+      <Box padding={{ md: "5rem 12.5rem" }}>
+        <Flex
+          paddingY="1rem"
+          alignItems="center"
+          justifyContent="space-between"
         >
-          {view === "timezones" ? (
-            <TimezonesView setTimezone={setTimezone} onClose={onClose} />
-          ) : (
-            <CurrencyView setCurrency={setCurrencyData} onClose={onClose} />
-          )}
-        </ModalContent>
-      </Modal>
-      <Flex overflowX="auto" sx={{ scrollSnapType: "x mandatory" }}>
-        <Box
-          padding={{ md: "5rem 12.5rem" }}
-          flexShrink="0"
-          width="100vw"
-          sx={{ scrollSnapAlign: "start" }}
-        >
-          <ClassesView timezone={timezone} onOpen={openTimezoneModal} />
-        </Box>
-        <Box
-          padding={{ md: "5rem 12.5rem" }}
-          flexShrink="0"
-          width="100vw"
-          sx={{ scrollSnapAlign: "start" }}
-        >
-          <ProductsView
-            currencyData={currencyData}
-            onOpen={openCurrencyModal}
+          <Profile
+            cursor="pointer"
+            onClick={onOpen}
+            country={timezone.country}
+            title={timezone.city}
+            text={timezone.offsetName}
           />
-        </Box>
-      </Flex>
+          <ToggleThemeButton />
+        </Flex>
+        <Table>
+          <TableCaption>
+            Horas em que começam a primeira e a última aula. (Horário de{" "}
+            {timezone.city}, {timezone.country})
+          </TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Dias</Th>
+              <Th>De</Th>
+              <Th>Às</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {classes.map(
+              ({ firstClassSchedule, lastClassSchedule, weekdays }) => (
+                <Tr key={weekdays}>
+                  <Td width="100%">{weekdays}</Td>
+                  <Td>{firstClassSchedule}</Td>
+                  <Td>{lastClassSchedule}</Td>
+                </Tr>
+              )
+            )}
+          </Tbody>
+          <Tfoot>
+            <Tr>
+              <Th>Dias</Th>
+              <Th>De</Th>
+              <Th>Às</Th>
+            </Tr>
+          </Tfoot>
+        </Table>
+      </Box>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <SearchBox onButtonClick={onClose} onInput={setQuery} />
+        <List position="relative" overflowY="auto" height="100%" bg="primary">
+          {timezones.filter(filter).map((timezone, i) => (
+            <AnimatedListItem
+              key={timezone.city}
+              index={i}
+              onClick={() => {
+                setTimezone(timezone)
+                onClose()
+              }}
+            >
+              <Profile
+                country={timezone.country}
+                title={timezone.city}
+                text={timezone.offsetName}
+              />
+            </AnimatedListItem>
+          ))}
+        </List>
+      </Modal>
     </>
   )
 }
