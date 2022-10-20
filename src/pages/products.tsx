@@ -108,7 +108,7 @@ export default function () {
             <Tr>
               <Th>Pagamento</Th>
               <Th>Produto</Th>
-              <Th isNumeric>valor</Th>
+              <Th isNumeric>Valor</Th>
             </Tr>
           </Tfoot>
         </Table>
