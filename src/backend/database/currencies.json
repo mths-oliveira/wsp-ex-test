@@ -377,7 +377,7 @@
   },
   "BRL": { "name": "Real Brasileiro", "symbol": "R$", "countries": ["Brasil"] },
   "QAR": { "name": "Rial Catarense", "symbol": "ر.ق", "countries": ["Catar"] },
-  "IRR": { "name": "Rial Iraniano", "symbol": "﷼", "countries": ["Iran"] },
+  "IRR": { "name": "Rial Iraniano", "symbol": "﷼", "countries": ["Irã"] },
   "OMR": { "name": "Rial Omanense", "symbol": "ر.ع.", "countries": ["Omã"] },
   "KHR": { "name": "Riel Cambojano", "symbol": "៛", "countries": ["Camboja"] },
   "MYR": { "name": "Ringgit Malaio", "symbol": "RM", "countries": ["Malásia"] },

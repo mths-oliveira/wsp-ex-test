@@ -63,7 +63,12 @@ export default function () {
   }, [currencyData.code])
   return (
     <>
-      <Box padding={{ md: "5rem 12.5rem" }}>
+      <Box
+        margin="auto"
+        maxWidth="50rem"
+        paddingTop={{ md: "5rem" }}
+        paddingBottom="5rem"
+      >
         <Flex
           paddingY="1rem"
           alignItems="center"
@@ -114,7 +119,11 @@ export default function () {
         </Table>
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <SearchBox onButtonClick={onClose} onInput={setQuery} />
+        <SearchBox
+          onButtonClick={onClose}
+          onInput={setQuery}
+          placeholder="Nome ou código da moeda"
+        />
         <List position="relative" height="100%" overflowY="auto">
           {currencies.filter(filter).map((currency, i) => (
             <AnimatedListItem

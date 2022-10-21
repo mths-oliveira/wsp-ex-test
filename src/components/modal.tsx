@@ -35,6 +35,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
     <Center
       bg="rgba(0,0,0,0.5)"
       position="fixed"
+      zIndex={10}
       inset="0"
       onClick={onClose}
       ref={modalRef}
@@ -47,6 +48,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
         overflowY="auto"
         height={["100%", "calc(100% - 7rem)"]}
         maxWidth="25rem"
+        width="100%"
         borderRadius="5px"
         onClick={(e) => {
           e.stopPropagation()

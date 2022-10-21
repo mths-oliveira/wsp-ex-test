@@ -7,14 +7,16 @@ import { IconInput } from "./icon-input"
 interface Props {
   onButtonClick: () => void
   onInput: (value: string) => void
+  placeholder: string
 }
 
-export function SearchBox({ onButtonClick, onInput }: Props) {
+export function SearchBox({ onButtonClick, onInput, placeholder }: Props) {
   return (
     <Flex padding="1.5rem 1rem">
       <IconButton icon={MdArrowBack} marginX="0.5rem" onClick={onButtonClick} />
       <IconInput
         id="currency-input"
+        placeholder={placeholder}
         onChange={debounce((e) => {
           onInput(e.target.value)
         })}

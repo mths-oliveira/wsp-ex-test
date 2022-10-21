@@ -13,7 +13,7 @@ export function FlagImage({ country, ...rest }: FlagImageProps) {
     <Image
       alt={country}
       src={`/${formatedCountry}.png`}
-      filter="drop-shadow(0 0 12px rgba(0,0,0,0.2))"
+      filter="drop-shadow(0 0 8px rgba(0,0,0,0.15))"
       marginX="1rem"
       {...rest}
     />

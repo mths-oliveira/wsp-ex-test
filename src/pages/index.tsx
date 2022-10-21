@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   List,
+  Stack,
   TableCaption,
   Tbody,
   Td,
@@ -11,7 +12,20 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react"
+import Link from "next/link"
 import { useState } from "react"
+import {
+  MdCalculate,
+  MdHome,
+  MdLockClock,
+  MdMonetizationOn,
+  MdOutlineCalculate,
+  MdOutlineHome,
+  MdOutlineMonetizationOn,
+  MdOutlineSchedule,
+  MdSchedule,
+  MdWatchLater,
+} from "react-icons/md"
 import { ClassesController } from "../backend/controllers/classes"
 import { TimezoneController } from "../backend/controllers/timezones"
 import { Timezone, TimezoneImp } from "../backend/models/timezone"
@@ -46,7 +60,7 @@ export default function () {
   }
   return (
     <>
-      <Box padding={{ md: "5rem 12.5rem" }}>
+      <Box margin="auto" maxWidth="50rem" paddingY={{ md: "5rem" }}>
         <Flex
           paddingY="1rem"
           alignItems="center"
@@ -93,9 +107,14 @@ export default function () {
           </Tfoot>
         </Table>
       </Box>
+
       <Modal isOpen={isOpen} onClose={onClose}>
-        <SearchBox onButtonClick={onClose} onInput={setQuery} />
-        <List position="relative" height="100%" overflowY="auto">
+        <SearchBox
+          onButtonClick={onClose}
+          onInput={setQuery}
+          placeholder="País, cidade ou fuso horário"
+        />
+        <List position="relative" overflowY="auto" height="100%">
           {timezones.filter(filter).map((timezone, i) => (
             <AnimatedListItem
               key={timezone.city}

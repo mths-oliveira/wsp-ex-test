@@ -9,7 +9,7 @@ export function Table({ sx, children, ...props }: TableProps) {
           color: "altText",
         },
         "&>caption, *>tr>*": {
-          padding: "1rem",
+          padding: ["1rem", "1rem 1.5rem"],
         },
         "&>*>tr>*": {
           borderColor: "borderColor",
