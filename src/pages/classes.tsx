@@ -41,6 +41,7 @@ import { Modal } from "../components/modal"
 import { ProfileListItem } from "../components/profile-list-item"
 import { SearchBox } from "../components/search-box"
 import { Table } from "../components/table"
+import { ToggleThemeButton } from "../components/toggle-theme-button"
 import { removeAccent } from "../utils/remove-accent"
 
 const classesController = new ClassesController()
@@ -58,7 +59,7 @@ function MenuItem({ children, as = "li", ...rest }: StackProps) {
 
 interface NavbarProps extends FlexProps {}
 
-function Navbar({ flexDir, ...rest }: NavbarProps) {
+function Navbar({ flexDir, fontSize, ...rest }: NavbarProps) {
   return (
     <Flex as="nav" {...rest}>
       <List
@@ -78,6 +79,9 @@ function Navbar({ flexDir, ...rest }: NavbarProps) {
             "&>p": {
               marginLeft: "1rem",
               display: ["none", "inline"],
+            },
+            "&>svg": {
+              fontSize,
             },
           },
         }}
@@ -112,7 +116,6 @@ function Profile({ title, text, country, ...rest }: ProfileProps) {
       cursor="pointer"
       fontWeight="600"
       flexDir={{ md: "column" }}
-      margin={["1rem 0", "3.5rem 1rem"]}
       {...rest}
     >
       <Box position="relative" margin="0.25rem">
@@ -179,6 +182,7 @@ export default function () {
           position="relative"
         >
           <Profile
+            margin="3.5rem 1rem"
             country={timezone.country}
             title={timezone.city}
             text={timezone.offsetName}
@@ -187,17 +191,25 @@ export default function () {
           <Navbar flexDir="column" />
         </Flex>
         <Flex flexDir="column" width="100%" position="relative">
-          <Profile
+          <Flex
             display={["flex", "none"]}
-            country={timezone.country}
-            title={timezone.city}
-            text={timezone.offsetName}
-            onClick={onOpen}
-          />
+            justifyContent="space-between"
+            alignItems="center"
+            marginY="1rem"
+          >
+            <Profile
+              country={timezone.country}
+              title={timezone.city}
+              text={timezone.offsetName}
+              onClick={onOpen}
+            />
+            <ToggleThemeButton />
+          </Flex>
           <Box padding={{ md: "5rem" }} width="100%" maxWidth="60rem">
             <Heading
-              fontSize={["1.25rem", "1.5rem"]}
-              margin={["1.5rem 1rem 1rem", "0 0 1.5rem"]}
+              display={["none", "inline-block"]}
+              fontSize="1.5rem"
+              marginBottom="1.5rem"
             >
               Tabela de Horários
             </Heading>
@@ -209,7 +221,7 @@ export default function () {
               height="fit-content"
             >
               <Table>
-                <TableCaption marginBottom={["3.5rem", "0"]}>
+                <TableCaption marginBottom="3.5rem">
                   Horas em que começam a primeira e a última aula. (Horário de{" "}
                   {timezone.city}, {timezone.country})
                 </TableCaption>
@@ -249,7 +261,7 @@ export default function () {
             bg="primary"
             display={["flex", "none"]}
           >
-            <Navbar flexDir="row" />
+            <Navbar flexDir="row" fontSize="1.5rem" />
           </Flex>
         </Flex>
       </Flex>
