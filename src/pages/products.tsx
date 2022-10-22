@@ -22,7 +22,7 @@ import { ToggleThemeButton } from "../components/toggle-theme-button"
 import { Box, List } from "@chakra-ui/layout"
 import { SearchBox } from "../components/search-box"
 import { AnimatedListItem } from "../components/animate-list-item"
-import { Profile } from "../components/profile"
+import { ProfileListItem } from "../components/profile-list-item"
 import { Modal } from "../components/modal"
 import { removeAccent } from "../utils/remove-accent"
 
@@ -74,7 +74,7 @@ export default function () {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Profile
+          <ProfileListItem
             cursor="pointer"
             onClick={onOpen}
             country={currencyData.country}
@@ -134,7 +134,7 @@ export default function () {
                 onClose()
               }}
             >
-              <Profile
+              <ProfileListItem
                 country={currency.country}
                 title={currency.name}
                 text={currency.code}

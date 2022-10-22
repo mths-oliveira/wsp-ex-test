@@ -35,6 +35,9 @@ export const theme = extendTheme({
     lg: "64em",
     xl: "80em",
   },
+  borders: {
+    sm: "1px solid #fff",
+  },
   styles: {
     global: {
       "html, body": {
@@ -42,6 +45,9 @@ export const theme = extendTheme({
         bg: "primary",
         fontWeight: 500,
         scrollBehavior: "smooth",
+      },
+      svg: {
+        fontSize: "1.25rem",
       },
       "@keyframes slade-in": {
         from: {

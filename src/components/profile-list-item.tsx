@@ -7,7 +7,7 @@ interface Props extends FlexProps {
   text: string
 }
 
-export function Profile({ country, text, title, ...props }: Props) {
+export function ProfileListItem({ country, text, title, ...props }: Props) {
   return (
     <Flex alignItems="center" {...props}>
       <FlagImage country={country} />

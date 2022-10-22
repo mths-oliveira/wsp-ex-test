@@ -31,7 +31,7 @@ import { TimezoneController } from "../backend/controllers/timezones"
 import { Timezone, TimezoneImp } from "../backend/models/timezone"
 import { AnimatedListItem } from "../components/animate-list-item"
 import { Modal } from "../components/modal"
-import { Profile } from "../components/profile"
+import { ProfileListItem } from "../components/profile-list-item"
 import { SearchBox } from "../components/search-box"
 import { Table } from "../components/table"
 import { ToggleThemeButton } from "../components/toggle-theme-button"
@@ -66,7 +66,7 @@ export default function () {
           alignItems="center"
           justifyContent="space-between"
         >
-          <Profile
+          <ProfileListItem
             cursor="pointer"
             onClick={onOpen}
             country={timezone.country}
@@ -124,7 +124,7 @@ export default function () {
                 onClose()
               }}
             >
-              <Profile
+              <ProfileListItem
                 country={timezone.country}
                 title={timezone.city}
                 text={timezone.offsetName}

@@ -5,7 +5,7 @@ export function Table({ sx, children, ...props }: TableProps) {
     <ChakraTable
       variant="simple"
       sx={{
-        "&>caption, *>tr>th": {
+        "*>tr>th": {
           color: "altText",
         },
         "&>caption, *>tr>*": {
